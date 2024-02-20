@@ -192,6 +192,15 @@ public:
     void InsertTrackTime(double& time);
 #endif
 
+    // ==========================================================================================
+    // ## R2-ORB-SLAM3
+    // ==========================================================================================
+    // FIXME: - add function to get the latest n poses
+    // ==========================================================================================
+    void r2_getLastNPoses(vector<vector<float>& poses, int numberPoses);
+    void r2_getAllPoses(vector<vector<float>& poses);
+    void r2_printLastNPoses(vecor<vector<float>& poses);
+
 private:
 
     void SaveAtlas(int type);

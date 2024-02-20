@@ -1545,5 +1545,121 @@ string System::CalculateCheckSum(string filename, int type)
     return checksum;
 }
 
+// ==========================================================================================
+// ## R2-ORB-SLAM3
+// ==========================================================================================
+// FIXME: - add function to get the latest n poses
+// ==========================================================================================
+
+void System::r2_getAllPoses(vector<vector<float>& allPoses)
+{   
+    allPoses.clear();
+
+    // current pose info
+    vector<float> currPose;
+    currPose.reserve(8);
+
+    cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
+
+    // get the map with the most keyframes (the merged map)
+    vector<Map*> vpMaps = mpAtlas->GetAllMaps();
+    Map* pBiggerMap;
+    int numMaxKFs = 0;
+    for(Map* pMap :vpMaps)
+    {
+        if(pMap && pMap->GetAllKeyFrames().size() > numMaxKFs)
+        {
+            numMaxKFs = pMap->GetAllKeyFrames().size();
+            pBiggerMap = pMap;
+        }
+    }
+
+    // if the map is not available, return
+    if(!pBiggerMap)
+    {
+        std::cout << "There is not a map!!" << std::endl;
+        return;
+    }
+
+    // get all keyframes and sort them using their ID
+    vector<KeyFrame*> vpKFs = pBiggerMap->GetAllKeyFrames();
+    sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
+
+    // Transform all keyframes so that the first keyframe is at the origin.
+    // After a loop closure the first keyframe might not be at the origin.
+    for(size_t i=0; i<vpKFs.size(); i++)
+    {
+        curr_pose.clear();
+        curr_pose.reserve(8);
+
+        KeyFrame* pKF = vpKFs[i];
+
+        // if keyframe is culled , go to the next one
+        if(!pKF || pKF->isBad())
+            continue;
+
+        // else, get info of the current transform of the pose
+        Sophus::SE3f T_base;
+        Eigen::Quaternionf q;
+        Eigen::Vector3f twb;
+
+        if (mSensor == IMU_MONOCULAR || mSensor == IMU_STEREO || mSensor==IMU_RGBD)
+        {
+            T_base = pKF->GetImuPose();   
+        }
+        else
+        {
+            T_base = pKF->GetPoseInverse();
+        }
+        q = T_base.unit_quaternion();
+        t = T_base.translation();
+
+        // push all pose transform data to vector
+        currPose.push_back(1e9*pKF->mTimeStamp);
+        currPose.push_back(t(0));
+        currPose.push_back(t(1));
+        currPose.push_back(t(2));
+        currPose.push_back(q.x());
+        currPose.push_back(q.y());
+        currPose.push_back(q.z());
+        currPose.push_back(q.w());
+
+        // submit this pose to poses repository
+        allPoses.push_back(currPose);
+    }
+}
+void System::r2_getLastNPoses(std::vector<vector<float>& poses, int numberPoses)
+{
+    // vector to hold all generated 
+    // clear input vector of vectors
+    poses.clear();
+    std::vector<vector<float> > allPoses;
+    
+    // get all available poses at this timestamp
+    getAllPoses(allPoses);
+
+    // get only the last n available poses 
+    // Adjust n if it exceeds the size of sourceVector, then copy the last n elements of what is available is available poses are less than n
+    int newNumberPoses = std::min(numberPoses, static_cast<int>(allPoses.size()));
+    poses.resize(newNumberPoses);
+    std::copy_backward(allPoses.end() - n, allPoses.end(), poses.end());
+}
+
+void System::r2_printLastNPoses(vecor<vector<float>& poses)
+{
+    std::cout << "\n ** R2 Poses ** \n";
+    std::cout << std::string(15, '*') << endl;
+    for (const auto& innerVector : poses) 
+    {
+        // Iterate through each float element in the inner vector
+        for (float value : innerVector) 
+        {
+            std::cout << value << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::string(10, '*') << endl;
+}
+
 } //namespace ORB_SLAM
 

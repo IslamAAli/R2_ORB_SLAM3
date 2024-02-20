@@ -1,0 +1,29 @@
+{
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+      "deque": "cpp",
+      "string": "cpp",
+      "vector": "cpp",
+      "chrono": "cpp",
+      "iostream": "cpp",
+      "random": "cpp",
+      "iomanip": "cpp",
+      "*.ipp": "cpp"
+    },
+
+    "todo-tree.customHighlight": {
+        "TODO": {
+          "icon": "check",
+          "type": "line",
+          "iconColour": "yellow",
+          "foreground": "red",
+          "background": "yellow",
+        },
+        "FIXME": {
+          "icon": "beaker",
+          "iconColour": "red",
+          "foreground": "white",
+          "background": "red"
+        }
+      },
+}

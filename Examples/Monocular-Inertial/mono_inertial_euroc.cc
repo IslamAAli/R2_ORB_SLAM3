@@ -46,6 +46,13 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // ==========================================================================================
+    // ## R2-ORB-SLAM3
+    // ==========================================================================================
+    // FIXME - read new cmd arg to include new params related to my r2 implementation
+    // ==========================================================================================
+
+    // we can read multiple sequences because they support multi-session SLAM, it can also be a single sequence (based on cmd args number)
     const int num_seq = (argc-3)/2;
     cout << "num_seq = " << num_seq << endl;
     bool bFileName= (((argc-3) % 2) == 1);
@@ -75,6 +82,7 @@ int main(int argc, char *argv[])
     nImu.resize(num_seq);
 
     int tot_images = 0;
+    // For each sequence , read data
     for (seq = 0; seq<num_seq; seq++)
     {
         cout << "Loading images for sequence " << seq << "...";
@@ -92,6 +100,9 @@ int main(int argc, char *argv[])
         LoadIMU(pathImu, vTimestampsImu[seq], vAcc[seq], vGyro[seq]);
         cout << "LOADED!" << endl;
 
+        // At this point, we have the names for each image, and the corresponding imu data (gyro and accelerometer)
+
+        //count the number of images and imu measurements to process
         nImages[seq] = vstrImageFilenames[seq].size();
         tot_images += nImages[seq];
         nImu[seq] = vTimestampsImu[seq].size();
@@ -103,7 +114,6 @@ int main(int argc, char *argv[])
         }
 
         // Find first imu to be considered, supposing imu measurements start first
-
         while(vTimestampsImu[seq][first_imu[seq]]<=vTimestampsCam[seq][0])
             first_imu[seq]++;
         first_imu[seq]--; // first imu measurement to be considered
@@ -124,13 +134,18 @@ int main(int argc, char *argv[])
     double t_track = 0.f;
 
     int proccIm=0;
+    // for each sequences, process this sequences
     for (seq = 0; seq<num_seq; seq++)
     {
 
         // Main loop
         cv::Mat im;
         vector<ORB_SLAM3::IMU::Point> vImuMeas;
+        vector<vector<float>> r2_lastNPoses;    // FIXME: vector to hold last n poses
+        int r2_nPoses = 20;                     // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
         proccIm = 0;
+
+        // for each image inside the sequence, process
         for(int ni=0; ni<nImages[seq]; ni++, proccIm++)
         {
             // Read image from file
@@ -169,7 +184,7 @@ int main(int argc, char *argv[])
             }
 
             // Load imu measurements from previous frame
-            vImuMeas.clear();
+            vImuMeas.clear(); // clear because we are doing pre-integration between keyframes, so previous measurements needs to be flushed. 
 
             if(ni>0)
             {
@@ -192,7 +207,17 @@ int main(int argc, char *argv[])
 
             // Pass the image to the SLAM system
             // cout << "tframe = " << tframe << endl;
+            //  INPUTS: image, timestamp, and imu measurments vector from last keyframe to this image.
             SLAM.TrackMonocular(im,tframe,vImuMeas); // TODO change to monocular_inertial
+
+
+            // ==========================================================================================
+            // ## R2-ORB-SLAM3
+            // ==========================================================================================
+            // FIXME: - add call to function to get the latest n poses
+            // ==========================================================================================
+            SLAM.r2_getLastNPoses(lastNPoses, r2_nPoses);
+            SLAM.r2_printLastNPoses(lastNPoses);
 
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
