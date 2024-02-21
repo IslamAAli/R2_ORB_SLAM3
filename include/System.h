@@ -26,6 +26,7 @@
 #include<stdlib.h>
 #include<string>
 #include<thread>
+#include <vector>
 #include<opencv2/core/core.hpp>
 
 #include "Tracking.h"
@@ -197,9 +198,9 @@ public:
     // ==========================================================================================
     // FIXME: - add function to get the latest n poses
     // ==========================================================================================
-    void r2_getLastNPoses(vector<vector<float>& poses, int numberPoses);
-    void r2_getAllPoses(vector<vector<float>& poses);
-    void r2_printLastNPoses(vecor<vector<float>& poses);
+    void r2_getLastNPoses(std::vector<std::vector<float>& poses, int numberPoses);
+    void r2_getAllPoses(std::vector<std::vector<float>& poses);
+    void r2_printLastNPoses(std::vector<std::vector<float>& poses);
 
 private:
 
