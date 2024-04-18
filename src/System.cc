@@ -1647,7 +1647,7 @@ void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numbe
     std::copy_backward(allPoses.end() - numberPoses, allPoses.end(), poses.end());
 }
 
-void System::r2_printLastNPoses(std::vector<std::vector<float>>& poses)
+void System::r2_printLastNPoses(std::vector<std::vector<double>>& poses)
 {
     std::cout << "\n ** R2 Poses ** \n";
     std::cout << std::string(15, '*') << endl;
