@@ -1612,7 +1612,7 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
         q = T_base.unit_quaternion();
         t = T_base.translation();
 
-        std::vector<vector<float> > currPose;
+        std::vector<vector<double> > currPose;
 
         // push all pose transform data to vector
         currPose.push_back(1e9*pKF->mTimeStamp);
@@ -1638,7 +1638,7 @@ void System::r2_getLastNPoses(std::vector<std::vector<float>>& poses, int number
     std::vector<vector<float> > allPoses;
     
     // get all available poses at this timestamp
-    getAllPoses(allPoses);
+    r2_getAllPoses(allPoses);
 
     // get only the last n available poses 
     // Adjust n if it exceeds the size of sourceVector, then copy the last n elements of what is available is available poses are less than n
