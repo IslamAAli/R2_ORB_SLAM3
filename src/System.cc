@@ -1551,7 +1551,7 @@ string System::CalculateCheckSum(string filename, int type)
 // FIXME: - add function to get the latest n poses
 // ==========================================================================================
 
-void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
+void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
 {   
     allPoses.clear();
 
@@ -1628,14 +1628,14 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
         allPoses.push_back(currPose);
     }
 }
-void System::r2_getLastNPoses(std::vector<std::vector<float>>& poses, int numberPoses)
+void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses)
 {
     cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
     
     // vector to hold all generated 
     // clear input vector of vectors
     poses.clear();
-    std::vector<vector<float> > allPoses;
+    std::vector<vector<double> > allPoses;
     
     // get all available poses at this timestamp
     r2_getAllPoses(allPoses);
