@@ -1556,10 +1556,8 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
     allPoses.clear();
 
     // current pose info
-    vector<float> currPose;
-    currPose.reserve(8);
-
-    cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
+    vector<float> curr_pose;
+    curr_pose.reserve(8);
 
     // get the map with the most keyframes (the merged map)
     vector<Map*> vpMaps = mpAtlas->GetAllMaps();
@@ -1601,7 +1599,7 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
         // else, get info of the current transform of the pose
         Sophus::SE3f T_base;
         Eigen::Quaternionf q;
-        Eigen::Vector3f twb;
+        Eigen::Vector3f t;
 
         if (mSensor == IMU_MONOCULAR || mSensor == IMU_STEREO || mSensor==IMU_RGBD)
         {
@@ -1630,6 +1628,8 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
 }
 void System::r2_getLastNPoses(std::vector<std::vector<float>>& poses, int numberPoses)
 {
+    cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
+    
     // vector to hold all generated 
     // clear input vector of vectors
     poses.clear();
@@ -1642,7 +1642,7 @@ void System::r2_getLastNPoses(std::vector<std::vector<float>>& poses, int number
     // Adjust n if it exceeds the size of sourceVector, then copy the last n elements of what is available is available poses are less than n
     int newNumberPoses = std::min(numberPoses, static_cast<int>(allPoses.size()));
     poses.resize(newNumberPoses);
-    std::copy_backward(allPoses.end() - n, allPoses.end(), poses.end());
+    std::copy_backward(allPoses.end() - numberPoses, allPoses.end(), poses.end());
 }
 
 void System::r2_printLastNPoses(std::vector<std::vector<float>>& poses)
