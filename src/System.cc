@@ -1612,7 +1612,7 @@ void System::r2_getAllPoses(std::vector<std::vector<float>>& allPoses)
         q = T_base.unit_quaternion();
         t = T_base.translation();
 
-        std::vector<vector<double> > currPose;
+        std::vector<double> currPose;
 
         // push all pose transform data to vector
         currPose.push_back(1e9*pKF->mTimeStamp);
