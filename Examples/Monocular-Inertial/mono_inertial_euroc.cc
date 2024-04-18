@@ -216,8 +216,8 @@ int main(int argc, char *argv[])
             // ==========================================================================================
             // FIXME: - add call to function to get the latest n poses
             // ==========================================================================================
-            SLAM.r2_getLastNPoses(lastNPoses, r2_nPoses);
-            SLAM.r2_printLastNPoses(lastNPoses);
+            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses);
+            SLAM.r2_printLastNPoses(r2_lastNPoses);
 
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
