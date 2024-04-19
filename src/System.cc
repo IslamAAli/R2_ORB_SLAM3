@@ -1559,28 +1559,31 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
     vector<double> curr_pose;
     curr_pose.reserve(8);
 
-    // get the map with the most keyframes (the merged map)
-    vector<Map*> vpMaps = mpAtlas->GetAllMaps();
-    Map* pBiggerMap;
-    int numMaxKFs = 0;
-    for(Map* pMap :vpMaps)
-    {
-        if(pMap && pMap->GetAllKeyFrames().size() > numMaxKFs)
-        {
-            numMaxKFs = pMap->GetAllKeyFrames().size();
-            pBiggerMap = pMap;
-        }
-    }
+    // // get the map with the most keyframes (the merged map)
+    // vector<Map*> vpMaps = mpAtlas->GetAllMaps();
+    // Map* pBiggerMap;
+    // int numMaxKFs = 0;
+    // for(Map* pMap :vpMaps)
+    // {
+    //     if(pMap && pMap->GetAllKeyFrames().size() > numMaxKFs)
+    //     {
+    //         numMaxKFs = pMap->GetAllKeyFrames().size();
+    //         pBiggerMap = pMap;
+    //     }
+    // }
 
-    // if the map is not available, return
-    if(!pBiggerMap)
-    {
-        std::cout << "There is not a map!!" << std::endl;
-        return;
-    }
+    // // if the map is not available, return
+    // if(!pBiggerMap)
+    // {
+    //     std::cout << "There is not a map!!" << std::endl;
+    //     return;
+    // }
+
+    // get the active map (current map, since we are working in real time)
+    Map* pActiveMap = mpAtlas->GetCurrentMap();
 
     // get all keyframes and sort them using their ID
-    vector<KeyFrame*> vpKFs = pBiggerMap->GetAllKeyFrames();
+    vector<KeyFrame*> vpKFs = pActiveMap->GetAllKeyFrames();
     sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
 
     // Transform all keyframes so that the first keyframe is at the origin.
