@@ -199,7 +199,7 @@ public:
     // FIXME: - add function to get the latest n poses
     // ==========================================================================================
     void r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses);
-    void r2_getAllPoses(std::vector<std::vector<double>>& poses);
+    void r2_getAllPoses(std::vector<std::vector<double>>& poses); 
     void r2_printLastNPoses(std::vector<std::vector<double>>& poses);
 
 private:

@@ -1556,7 +1556,7 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
     allPoses.clear();
 
     // current pose info
-    vector<float> curr_pose;
+    vector<double> curr_pose;
     curr_pose.reserve(8);
 
     // get the map with the most keyframes (the merged map)
@@ -1654,7 +1654,7 @@ void System::r2_printLastNPoses(std::vector<std::vector<double>>& poses)
     for (const auto& innerVector : poses) 
     {
         // Iterate through each float element in the inner vector
-        for (float value : innerVector) 
+        for (double value : innerVector) 
         {
             std::cout << value << " ";
         }

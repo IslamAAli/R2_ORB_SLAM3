@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
         // Main loop
         cv::Mat im;
         vector<ORB_SLAM3::IMU::Point> vImuMeas;
-        vector<vector<float>> r2_lastNPoses;    // FIXME: vector to hold last n poses
+        vector<vector<double>> r2_lastNPoses;    // FIXME: vector to hold last n poses
         int r2_nPoses = 20;                     // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
         proccIm = 0;
 
