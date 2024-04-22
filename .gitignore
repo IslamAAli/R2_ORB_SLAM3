@@ -91,3 +91,29 @@ my_settings.txt
 borrar/*
 
 */ExecMean.txt
+
+Docker/1.84-main.sock
+Docker/Backups
+Docker/blob_storage
+Docker/Cache
+Docker/CachedConfigurations
+Docker/CachedData
+Docker/CachedExtensionVSIXs
+Docker/CachedProfilesData
+Docker/'Code Cache'
+Docker/code.lock
+Docker/Cookies
+Docker/Cookies-journal
+Docker/Crashpad
+Docker/DawnCache
+Docker/Dictionaries
+Docker/GPUCache
+Docker/languagepacks.json
+Docker/'Local Storage'
+Docker/logs
+Docker/machineid
+Docker/'Network Persistent State'
+Docker/Preferences
+Docker/'Session Storage'
+Docker/TransportSecurity
+Docker/User
