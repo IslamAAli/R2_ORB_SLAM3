@@ -33,6 +33,7 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 
+
 namespace ORB_SLAM3
 {
 
@@ -1559,28 +1560,13 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
     vector<double> curr_pose;
     curr_pose.reserve(8);
 
-    // // get the map with the most keyframes (the merged map)
-    // vector<Map*> vpMaps = mpAtlas->GetAllMaps();
-    // Map* pBiggerMap;
-    // int numMaxKFs = 0;
-    // for(Map* pMap :vpMaps)
-    // {
-    //     if(pMap && pMap->GetAllKeyFrames().size() > numMaxKFs)
-    //     {
-    //         numMaxKFs = pMap->GetAllKeyFrames().size();
-    //         pBiggerMap = pMap;
-    //     }
-    // }
-
-    // // if the map is not available, return
-    // if(!pBiggerMap)
-    // {
-    //     std::cout << "There is not a map!!" << std::endl;
-    //     return;
-    // }
-
     // get the active map (current map, since we are working in real time)
     Map* pActiveMap = mpAtlas->GetCurrentMap();
+
+    if (pActiveMap == NULL)
+    {
+        cout << "TEST: active map is null" << endl;
+    }
 
     // get all keyframes and sort them using their ID
     vector<KeyFrame*> vpKFs = pActiveMap->GetAllKeyFrames();
@@ -1631,9 +1617,9 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
         allPoses.push_back(currPose);
     }
 }
-void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses)
+void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses, ORB_SLAM3::PoseFileHandler& json_file_handler)
 {
-    cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
+    // cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
     
     // vector to hold all generated 
     // clear input vector of vectors
@@ -1647,7 +1633,12 @@ void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numbe
     // Adjust n if it exceeds the size of sourceVector, then copy the last n elements of what is available is available poses are less than n
     int newNumberPoses = std::min(numberPoses, static_cast<int>(allPoses.size()));
     poses.resize(newNumberPoses);
-    std::copy_backward(allPoses.end() - numberPoses, allPoses.end(), poses.end());
+    std::copy_backward(allPoses.end() - newNumberPoses, allPoses.end(), poses.end());
+
+    // dump poses to text file
+    if (!json_file_handler.savePosesToJson(poses)) {
+        std::cerr << "Error writing to file\n";
+    }
 }
 
 void System::r2_printLastNPoses(std::vector<std::vector<double>>& poses)
@@ -1663,7 +1654,7 @@ void System::r2_printLastNPoses(std::vector<std::vector<double>>& poses)
         }
         std::cout << std::endl;
     }
-    std::cout << std::string(10, '*') << endl;
+    std::cout << std::string(15, '*') << endl;
 }
 
 } //namespace ORB_SLAM

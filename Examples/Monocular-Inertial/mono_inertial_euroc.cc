@@ -28,6 +28,7 @@
 
 #include<System.h>
 #include "ImuTypes.h"
+#include "R2_file_handler.h"
 
 using namespace std;
 
@@ -141,8 +142,22 @@ int main(int argc, char *argv[])
         // Main loop
         cv::Mat im;
         vector<ORB_SLAM3::IMU::Point> vImuMeas;
-        vector<vector<double>> r2_lastNPoses;    // FIXME: vector to hold last n poses
-        int r2_nPoses = 20;                     // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
+
+        
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        vector<vector<double>> r2_lastNPoses;           // FIXME: vector to hold last n poses
+        int r2_nPoses = 20;                             // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
+        const string json_file =  "json_" + string(argv[argc-1]) + ".txt";
+        ORB_SLAM3::PoseFileHandler fileHandler(json_file);      // FIXME: Create an instance of PoseFileHandler
+        // Open the file
+        if (!fileHandler.open()) {
+            std::cerr << "Unable to open file for writing\n";
+            return 1;
+        }
+        // ==========================================================================================
+
         proccIm = 0;
 
         // for each image inside the sequence, process
@@ -216,8 +231,8 @@ int main(int argc, char *argv[])
             // ==========================================================================================
             // FIXME: - add call to function to get the latest n poses
             // ==========================================================================================
-            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses);
-            SLAM.r2_printLastNPoses(r2_lastNPoses);
+            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
+            //SLAM.r2_printLastNPoses(r2_lastNPoses);
 
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
@@ -252,10 +267,20 @@ int main(int argc, char *argv[])
 
             SLAM.ChangeDataset();
         }
+
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        // Close the file
+        fileHandler.close();
+        // ==========================================================================================
     }
 
     // Stop all threads
     SLAM.Shutdown();
+
+
+    
 
     // Save camera trajectory
     if (bFileName)

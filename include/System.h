@@ -40,6 +40,7 @@
 #include "Viewer.h"
 #include "ImuTypes.h"
 #include "Settings.h"
+#include "R2_file_handler.h"
 
 
 namespace ORB_SLAM3
@@ -198,7 +199,7 @@ public:
     // ==========================================================================================
     // FIXME: - add function to get the latest n poses
     // ==========================================================================================
-    void r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses);
+    void r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses, ORB_SLAM3::PoseFileHandler& json_file_handler);
     void r2_getAllPoses(std::vector<std::vector<double>>& poses); 
     void r2_printLastNPoses(std::vector<std::vector<double>>& poses);
 
