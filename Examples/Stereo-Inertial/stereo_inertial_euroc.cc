@@ -30,6 +30,7 @@
 #include<System.h>
 #include "ImuTypes.h"
 #include "Optimizer.h"
+#include "R2_file_handler.h"
 
 using namespace std;
 
@@ -46,6 +47,12 @@ int main(int argc, char **argv)
         cerr << endl << "Usage: ./stereo_inertial_euroc path_to_vocabulary path_to_settings path_to_sequence_folder_1 path_to_times_file_1 (path_to_image_folder_2 path_to_times_file_2 ... path_to_image_folder_N path_to_times_file_N) " << endl;
         return 1;
     }
+
+    // ==========================================================================================
+    // ## R2-ORB-SLAM3
+    // ==========================================================================================
+    // FIXME - read new cmd arg to include new params related to my r2 implementation
+    // ==========================================================================================
 
     const int num_seq = (argc-3)/2;
     cout << "num_seq = " << num_seq << endl;
@@ -134,6 +141,20 @@ int main(int argc, char **argv)
     cv::Mat imLeft, imRight;
     for (seq = 0; seq<num_seq; seq++)
     {
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        vector<vector<double>> r2_lastNPoses;           // FIXME: vector to hold last n poses
+        int r2_nPoses = 20;                             // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
+        const string json_file =  "json_" + string(argv[argc-1]) + ".txt";
+        ORB_SLAM3::PoseFileHandler fileHandler(json_file);      // FIXME: Create an instance of PoseFileHandler
+        // Open the file
+        if (!fileHandler.open()) {
+            std::cerr << "Unable to open file for writing\n";
+            return 1;
+        }
+        // ==========================================================================================
+
         // Seq loop
         vector<ORB_SLAM3::IMU::Point> vImuMeas;
         double t_rect = 0.f;
@@ -184,6 +205,14 @@ int main(int argc, char **argv)
             // Pass the images to the SLAM system
             SLAM.TrackStereo(imLeft,imRight,tframe,vImuMeas);
 
+            // ==========================================================================================
+            // ## R2-ORB-SLAM3
+            // ==========================================================================================
+            // FIXME: - add call to function to get the latest n poses
+            // ==========================================================================================
+            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
+            //SLAM.r2_printLastNPoses(r2_lastNPoses);
+
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     #else
@@ -216,6 +245,13 @@ int main(int argc, char **argv)
 
             SLAM.ChangeDataset();
         }
+
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        // Close the file
+        fileHandler.close();
+        // ==========================================================================================
 
 
     }
