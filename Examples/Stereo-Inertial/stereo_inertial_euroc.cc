@@ -144,15 +144,15 @@ int main(int argc, char **argv)
         // ==========================================================================================
         // ## R2-ORB-SLAM3
         // ==========================================================================================
-        vector<vector<double>> r2_lastNPoses;           // FIXME: vector to hold last n poses
-        int r2_nPoses = 20;                             // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
-        const string json_file =  "json_" + string(argv[argc-1]) + ".txt";
-        ORB_SLAM3::PoseFileHandler fileHandler(json_file);      // FIXME: Create an instance of PoseFileHandler
-        // Open the file
-        if (!fileHandler.open()) {
-            std::cerr << "Unable to open file for writing\n";
-            return 1;
-        }
+        // vector<vector<double>> r2_lastNPoses;           // FIXME: vector to hold last n poses
+        // int r2_nPoses = 20;                             // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
+        // const string json_file =  "json_" + string(argv[argc-1]) + ".txt";
+        // ORB_SLAM3::PoseFileHandler fileHandler(json_file);      // FIXME: Create an instance of PoseFileHandler
+        // // Open the file
+        // if (!fileHandler.open()) {
+        //     std::cerr << "Unable to open file for writing\n";
+        //     return 1;
+        // }
         // ==========================================================================================
 
         // Seq loop
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
             // ==========================================================================================
             // FIXME: - add call to function to get the latest n poses
             // ==========================================================================================
-            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
+            // SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
             //SLAM.r2_printLastNPoses(r2_lastNPoses);
 
     #ifdef COMPILEDWITHC11
@@ -250,7 +250,7 @@ int main(int argc, char **argv)
         // ## R2-ORB-SLAM3
         // ==========================================================================================
         // Close the file
-        fileHandler.close();
+        // fileHandler.close();
         // ==========================================================================================
 
 
