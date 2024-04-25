@@ -203,6 +203,7 @@ int main(int argc, char **argv)
             std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
     #endif
 
+            cout << vImuMeas.size() <<endl;
             // Pass the images to the SLAM system
             SLAM.TrackStereo(imLeft,imRight,tframe,vImuMeas);
 
