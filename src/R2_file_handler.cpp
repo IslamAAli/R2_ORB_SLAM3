@@ -22,13 +22,14 @@ namespace ORB_SLAM3 {
         return file.is_open();
     }
 
-    bool PoseFileHandler::savePosesToJson(const std::vector<std::vector<double>>& poses) {
+    bool PoseFileHandler::savePosesToJson(const std::vector<std::vector<double>>& poses, int matches_count) {
         if (!file.is_open()) {
             return false;
         }
 
         file << "        {\n";
         file << "            \"id\": " << keyframeId << ",\n";
+        file << "            \"matches\": " << matches_count << ",\n";
         file << "            \"poses\": [\n";
         for (size_t i = 0; i < poses.size(); ++i) {
             const auto& pose = poses[i];

@@ -33,6 +33,9 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 
 namespace ORB_SLAM3
 {
@@ -1635,8 +1638,9 @@ void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numbe
     poses.resize(newNumberPoses);
     std::copy_backward(allPoses.end() - newNumberPoses, allPoses.end(), poses.end());
 
+    int total_tracked_pts = r2_getTrackedPointsCount();
     // dump poses to text file
-    if (!json_file_handler.savePosesToJson(poses)) {
+    if (!json_file_handler.savePosesToJson(poses, total_tracked_pts)) {
         std::cerr << "Error writing to file\n";
     }
 }
@@ -1655,6 +1659,33 @@ void System::r2_printLastNPoses(std::vector<std::vector<double>>& poses)
         std::cout << std::endl;
     }
     std::cout << std::string(15, '*') << endl;
+}
+
+int System::r2_getTrackedPointsCount()
+{
+    int totalTrackedPts = 0;
+
+    std::vector<cv::KeyPoint> mvCurrentKeys=mpTracker->mCurrentFrame.mvKeys;
+    int N = mvCurrentKeys.size();
+    std::vector<bool> mvbMap = vector<bool>(N,false);
+
+    for(int i=0;i<N;i++)
+    {
+        MapPoint* pMP = mpTracker->mCurrentFrame.mvpMapPoints[i];
+        if(pMP)
+        {
+            if(!mpTracker->mCurrentFrame.mvbOutlier[i])
+            {
+                if(pMP->Observations()>0)
+                {
+                    mvbMap[i]=true;
+                    totalTrackedPts ++ ;
+                }
+            }
+        }
+    }
+
+    return totalTrackedPts;
 }
 
 } //namespace ORB_SLAM

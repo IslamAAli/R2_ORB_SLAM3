@@ -20,7 +20,7 @@ public:
 
     bool isOpen() const ;
 
-    bool savePosesToJson(const std::vector<std::vector<double>>& poses) ;
+    bool savePosesToJson(const std::vector<std::vector<double>>& poses, int matches_count) ;
 
 private:
     std::ofstream file;
