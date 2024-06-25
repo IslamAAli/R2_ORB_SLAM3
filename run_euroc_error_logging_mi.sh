@@ -1,18 +1,34 @@
 #!/bin/bash
-echo "Launching Room 1 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room1_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room1_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room1_512.txt dataset-room1_512_monoi
 
-echo "Launching Room 2 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room2_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room2_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room2_512.txt dataset-room2_512_monoi
+echo "Launching MH01 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/MH_01_easy ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH01.txt dataset-MH01_stereoi
 
-echo "Launching Room 3 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room3_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room3_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room3_512.txt dataset-room3_512_monoi
+echo "Launching MH02 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/MH_02_easy ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH02.txt dataset-MH02_stereoi
 
-echo "Launching Room 4 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room4_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room4_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room4_512.txt dataset-room4_512_monoi
+echo "Launching MH03 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/MH_03_medium ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH03.txt dataset-MH03_stereoi
 
-echo "Launching Room 5 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room5_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room5_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room5_512.txt dataset-room5_512_monoi
+echo "Launching MH04 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/MH_04_difficult ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH04.txt dataset-MH04_stereoi
 
-echo "Launching Room 6 with Monocular-Inertial sensor"
-./Examples/Monocular-Inertial/mono_inertial_tum_vi Vocabulary/ORBvoc.txt Examples/Monocular-Inertial/TUM_512.yaml ../../Dataset/dataset-room6_512_16/mav0/cam0/data Examples/Monocular-Inertial/TUM_TimeStamps/dataset-room6_512.txt Examples/Monocular-Inertial/TUM_IMU/dataset-room6_512.txt dataset-room6_512_monoi
+echo "Launching MH05 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/MH_05_difficult ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH05.txt dataset-MH05_stereoi
+
+echo "Launching V101 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V1_01_easy ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V101.txt dataset-V101_stereoi
+
+echo "Launching V102 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V1_02_medium ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V102.txt dataset-V102_stereoi
+
+echo "Launching V103 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V1_03_difficult ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V103.txt dataset-V103_stereoi
+
+echo "Launching V201 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V2_01_easy ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V201.txt dataset-V201_stereoi
+
+echo "Launching V202 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V2_02_medium ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V202.txt dataset-V202_stereoi
+
+echo "Launching V203 with Monocular-Inertial sensor"
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ../../Dataset/V2_03_difficult ./Examples/Stereo-Inertial/EuRoC_TimeStamps/V203.txt dataset-V203_stereoi
