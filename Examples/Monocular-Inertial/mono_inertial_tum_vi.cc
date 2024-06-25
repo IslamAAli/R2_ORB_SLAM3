@@ -129,6 +129,23 @@ int main(int argc, char **argv)
         // Main loop
         cv::Mat im;
         vector<ORB_SLAM3::IMU::Point> vImuMeas;
+
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        vector<vector<double>> r2_lastNPoses;           // FIXME: vector to hold last n poses
+        int r2_nPoses = 20;                             // FIXME: Adding constant number of poses, to be replaced with what is coming from cmd args
+        const string json_file =  "json_" + string(argv[argc-1]) + ".txt";
+        ORB_SLAM3::PoseFileHandler fileHandler(json_file);      // FIXME: Create an instance of PoseFileHandler
+        // Open the file
+        if (!fileHandler.open()) {
+            std::cerr << "Unable to open file for writing\n";
+            return 1;
+        }
+        // ==========================================================================================
+
+
+
         proccIm = 0;
         cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(3.0, cv::Size(8, 8));
         for(int ni=0; ni<nImages[seq]; ni++, proccIm++)
@@ -205,6 +222,13 @@ int main(int argc, char **argv)
             // cout << "tframe = " << tframe << endl;
             SLAM.TrackMonocular(im,tframe,vImuMeas); // TODO change to monocular_inertial
 
+            // ==========================================================================================
+            // ## R2-ORB-SLAM3
+            // ==========================================================================================
+            // FIXME: - add call to function to get the latest n poses
+            // ==========================================================================================
+            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
+
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     #else
@@ -239,6 +263,13 @@ int main(int argc, char **argv)
 
             SLAM.ChangeDataset();
         }
+
+        // ==========================================================================================
+        // ## R2-ORB-SLAM3
+        // ==========================================================================================
+        // Close the file
+        fileHandler.close();
+        // ==========================================================================================
 
     }
 
