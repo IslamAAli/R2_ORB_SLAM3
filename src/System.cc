@@ -1555,7 +1555,7 @@ string System::CalculateCheckSum(string filename, int type)
 // FIXME: - add function to get the latest n poses
 // ==========================================================================================
 
-void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
+void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses, bool TUM_VI)
 {   
     allPoses.clear();
 
@@ -1595,7 +1595,13 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
 
         if (mSensor == IMU_MONOCULAR || mSensor == IMU_STEREO || mSensor==IMU_RGBD)
         {
-            T_base = pKF->GetImuPose();   
+            if (TUM_VI)
+            {
+                T_base = pKF->GetPoseInverse();
+            }
+            else{
+                T_base = pKF->GetImuPose();  
+            }
         }
         else
         {
@@ -1620,7 +1626,7 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses)
         allPoses.push_back(currPose);
     }
 }
-void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses, ORB_SLAM3::PoseFileHandler& json_file_handler)
+void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numberPoses, ORB_SLAM3::PoseFileHandler& json_file_handler,  bool TUM_VI)
 {
     // cout << endl << "Extracting last (" << numberPoses << ") poses" << endl;
     
@@ -1630,7 +1636,7 @@ void System::r2_getLastNPoses(std::vector<std::vector<double>>& poses, int numbe
     std::vector<vector<double> > allPoses;
     
     // get all available poses at this timestamp
-    r2_getAllPoses(allPoses);
+    r2_getAllPoses(allPoses, TUM_VI);
 
     // get only the last n available poses 
     // Adjust n if it exceeds the size of sourceVector, then copy the last n elements of what is available is available poses are less than n

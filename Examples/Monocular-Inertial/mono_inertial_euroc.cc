@@ -231,7 +231,7 @@ int main(int argc, char *argv[])
             // ==========================================================================================
             // FIXME: - add call to function to get the latest n poses
             // ==========================================================================================
-            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler);
+            SLAM.r2_getLastNPoses(r2_lastNPoses, r2_nPoses, fileHandler, false);
             //SLAM.r2_printLastNPoses(r2_lastNPoses);
 
     #ifdef COMPILEDWITHC11
