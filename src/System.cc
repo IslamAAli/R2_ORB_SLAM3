@@ -1595,13 +1595,14 @@ void System::r2_getAllPoses(std::vector<std::vector<double>>& allPoses, bool TUM
 
         if (mSensor == IMU_MONOCULAR || mSensor == IMU_STEREO || mSensor==IMU_RGBD)
         {
-            if (TUM_VI)
-            {
-                T_base = pKF->GetPoseInverse();
-            }
-            else{
-                T_base = pKF->GetImuPose();  
-            }
+            // if (TUM_VI)
+            // {
+            //     T_base = pKF->GetPoseInverse();
+            // }
+            // else{
+            //     T_base = pKF->GetImuPose();  
+            // }
+            T_base = pKF->GetImuPose(); 
         }
         else
         {
