@@ -117,3 +117,15 @@ Docker/Preferences
 Docker/'Session Storage'
 Docker/TransportSecurity
 Docker/User
+
+
+# exceptions
+!Thirdparty/DBoW2/DUtils/Timestamp.cpp
+!Thirdparty/DBoW2/DUtils/Timestamp.h
+!Thirdparty/g2o/g2o/stuff/timeutil.cpp
+!Thirdparty/g2o/g2o/stuff/timeutil.h
+!Thirdparty/EDLines/Makefile
+!Thirdparty/EDLines/Timer.h
+!tools/bin_vocabulary
+!tools/bin_vocabulary.cc
+!Dockerfile
